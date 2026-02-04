@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>You have a message 💌</title>
+
+<style>
+/* ================= FIRST HTML (NO CONTENT CHANGED) ================= */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ================= SECOND HTML STYLES (NO CHANGE) ================= */
+
+#page2 {
+  display: none;
+  margin: 0;
+  height: 100vh;
+  background: #fde2e2;
+  overflow: hidden;
+}
+
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 100vw;
+  position: relative;
+  z-index: 2;
+}
+
+.envelope {
+  position: relative;
+  width: 340px;
+  height: 220px;
+  background: #e25555;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 170px solid transparent;
+  border-right: 170px solid transparent;
+  border-top: 110px solid #ffb3b3;
+}
+
+.letter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.7s ease;
+  overflow-y: auto;
+}
+
+.envelope.open .letter {
+  transform: translateY(0);
+}
+
+.love-img {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 12px;
+  margin: 12px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+h2 {
+  color: #e25555;
+}
+
+p {
+  color: #333;
+  font-size: 15px;
+}
+
+.love {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div id="page1" style="background-color:#f6f6f6;">
+  <table Height="100%" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+        <table width="300" cellpadding="20" cellspacing="0" style="background:#ffffff; border-radius:8px;">
+          <tr>
+            <td align="center">
+              <h2 style="color:#e25555;">📩 New Secure Message</h2>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="color:#333; font-size:16px;">
+              Hi Vicku❤️,<br><br>
+              You’ve received a <b>confidential message</b> that can only be viewed securely.
+              <br><br>
+              Please verify yourself to continue.
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center">
+              <a href="#" onclick="showPage2()"
+                 style="background:#e25555; color:#ffffff; padding:14px 24px;
+                        text-decoration:none; border-radius:6px; font-size:16px;">
+                        Open Secure Message 💖
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="font-size:12px; color:#999; text-align:center;">
+              This link will expire soon 😉
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div id="page2">
+  <div class="center-wrapper">
+    <div class="envelope" onclick="openEnvelope()">
+      <div class="letter">
+        <h2>Hi Chelloo ❤️</h2>
+
+        <img src="https://th-i.thgim.com/public/entertainment/movies/n9ch9v/article68090873.ece/alternates/FREE_1200/Muthupandi%20Ghilli.png"
+             class="love-img">
+
+        <p>
+        <b>I LOVE YOU</b> 💖<br><br>
+          You are doing a great Job in your life da vennamavaney. I'll support you no matter how hard the situation is 💕<br><br>
+          I'll always stand by your side. Neengalum antha maari iruppinga nu namburen illanna valuthupuduven.<br>
+          You’re my favorite person, always ❤️
+        </p>
+
+        <!--  Sweet paragraph added (only addition) -->
+        <p>
+          Murugar arul-oda, we will reach great heights, achieve great success, and build the fort together.<br>
+          This message is just a tiny reminder — you mean the world to me 💫<br><br>
+          varataaaaa....😘
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage2() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+}
+
+function openEnvelope() {
+  document.querySelector('.envelope').classList.add('open');
+}
+
+function createLove() {
+  const love = document.createElement("div");
+  love.classList.add("love");
+  const emojis = ["❤️","💖","💕","💘","💗"];
+  love.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+  love.style.left = Math.random() * 100 + "vw";
+  love.style.animationDuration = (4 + Math.random() * 5) + "s";
+  love.style.fontSize = (18 + Math.random() * 22) + "px";
+  document.body.appendChild(love);
+  setTimeout(() => love.remove(), 9000);
+}
+setInterval(createLove, 300);
+</script>
+
+</body>
+</html>
