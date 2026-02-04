@@ -3,20 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <title>You have a message 💌</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ================= FIRST HTML (NO CONTENT CHANGED) ================= */
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
-/* ================= SECOND HTML STYLES (NO CHANGE) ================= */
+/* ================= PAGE 1 ================= */
+
+#page1 {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f6f6f6;
+}
+
+.envelope-wrapper {
+  width: 90%;
+  max-width: 360px;
+}
+
+.envelope-front {
+  background: #e25555;
+  border-radius: 10px;
+  padding: 25px 15px 35px;
+  position: relative;
+}
+
+.envelope-front::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 50% solid transparent;
+  border-right: 50% solid transparent;
+  border-top: 70px solid #ffb3b3;
+}
+
+.envelope-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* ================= PAGE 2 ================= */
 
 #page2 {
   display: none;
-  margin: 0;
   height: 100vh;
   background: #fde2e2;
   overflow: hidden;
@@ -26,55 +65,88 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
-  width: 100vw;
-  position: relative;
-  z-index: 2;
+  height: 100%;
 }
+
+/* ================= ENVELOPE ================= */
 
 .envelope {
   position: relative;
-  width: 340px;
-  height: 220px;
+  width: 92%;
+  max-width: 460px;
+  height: 300px;
   background: #e25555;
+  border-radius: 8px;
   cursor: pointer;
-  z-index: 5;
+  overflow: hidden;
 }
 
-.envelope::before {
-  content: "";
+/* FLAP */
+.flap {
   position: absolute;
   top: 0;
   left: 0;
-  border-left: 170px solid transparent;
-  border-right: 170px solid transparent;
-  border-top: 110px solid #ffb3b3;
+  width: 0;
+  height: 0;
+  border-left: 230px solid transparent;
+  border-right: 230px solid transparent;
+  border-top: 150px solid #ffb3b3;
+  transform-origin: top;
+  transition: transform 0.9s ease;
+  z-index: 5;
 }
 
+.envelope.open .flap {
+  transform: rotateX(180deg);
+}
+
+/* LETTER */
 .letter {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: #ffffff;
-  padding: 20px;
+  background: #fff;
+  padding: 22px;
   box-sizing: border-box;
   text-align: center;
   transform: translateY(100%);
-  transition: transform 0.7s ease;
+  transition: transform 1.1s ease;
   overflow-y: auto;
+  z-index: 3;
 }
 
 .envelope.open .letter {
   transform: translateY(0);
 }
 
+/* CLICK HINT */
+.hint {
+  position: absolute;
+  bottom: 14px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  animation: pulse 1.4s infinite;
+  z-index: 6;
+}
+
+.envelope.open .hint {
+  display: none;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 0.4; transform: scale(1); }
+}
+
 .love-img {
   width: 100%;
-  max-width: 220px;
+  max-width: 240px;
   border-radius: 12px;
   margin: 12px 0;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
 h2 {
@@ -84,14 +156,16 @@ h2 {
 p {
   color: #333;
   font-size: 15px;
+  line-height: 1.5;
 }
+
+/* ================= FLOATING HEARTS ================= */
 
 .love {
   position: fixed;
   bottom: -20px;
-  font-size: 24px;
   animation: floatUp linear infinite;
-  opacity: 0.8;
+  opacity: 0.85;
   z-index: 1;
 }
 
@@ -99,75 +173,44 @@ p {
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(-110vh); opacity: 0; }
 }
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 480px) {
+  .envelope {
+    height: 260px;
+  }
+  p { font-size: 14px; }
+  h2 { font-size: 18px; }
+}
 </style>
 </head>
 
 <body>
 
 <!-- ================= PAGE 1 ================= -->
-<div id="page1" style="background-color:#f6f6f6;">
-  <table Height="100%" width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center">
-        <table width="300" cellpadding="20" cellspacing="0" style="background:#ffffff; border-radius:8px;">
-          <tr>
-            <td align="center">
-              <h2 style="color:#e25555;">📩 New Secure Message</h2>
-            </td>
-          </tr>
+<div id="page1">
+  <div class="envelope-wrapper">
+    <div class="envelope-front">
+      <div class="envelope-content">
 
-          <tr>
-            <td style="color:#333; font-size:16px;">
-              Hi Vicku❤️,<br><br>
-              You’ve received a <b>confidential message</b> that can only be viewed securely.
-              <br><br>
-              Please verify yourself to continue.
-            </td>
-          </tr>
-
-          <tr>
-            <td align="center">
-              <a href="#" onclick="showPage2()"
-                 style="background:#e25555; color:#ffffff; padding:14px 24px;
-                        text-decoration:none; border-radius:6px; font-size:16px;">
-                        Open Secure Message 💖
-              </a>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="font-size:12px; color:#999; text-align:center;">
-              This link will expire soon 😉
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<!-- ================= PAGE 2 ================= -->
-<div id="page2">
-  <div class="center-wrapper">
-    <div class="envelope" onclick="openEnvelope()">
-      <div class="letter">
-        <h2>Hi Chelloo ❤️</h2>
-
-        <img src="https://th-i.thgim.com/public/entertainment/movies/n9ch9v/article68090873.ece/alternates/FREE_1200/Muthupandi%20Ghilli.png"
-             class="love-img">
+        <h2>📩 New Secure Message</h2>
 
         <p>
-        <b>I LOVE YOU</b> 💖<br><br>
-          You are doing a great Job in your life da vennamavaney. I'll support you no matter how hard the situation is 💕<br><br>
-          I'll always stand by your side. Neengalum antha maari iruppinga nu namburen illanna valuthupuduven.<br>
-          You’re my favorite person, always ❤️
+          Hi Vicku❤️,<br><br>
+          You’ve received a <b>confidential message</b> that can only be viewed securely.
+          <br><br>
+          Please verify yourself to continue.
         </p>
 
-        <!--  Sweet paragraph added (only addition) -->
-        <p>
-          Murugar arul-oda, we will reach great heights, achieve great success, and build the fort together.<br>
-          This message is just a tiny reminder — you mean the world to me 💫<br><br>
-          varataaaaa....😘
+        <a href="#" onclick="showPage2()"
+           style="display:inline-block;background:#e25555;color:#fff;
+           padding:14px 24px;text-decoration:none;border-radius:6px;font-size:16px;">
+           Open Secure Message 💖
+        </a>
+
+        <p style="font-size:12px;color:#999;margin-top:12px;">
+          This link will expire soon 😉
         </p>
 
       </div>
@@ -175,14 +218,65 @@ p {
   </div>
 </div>
 
+<!-- ================= PAGE 2 ================= -->
+<div id="page2">
+  <div class="center-wrapper">
+    <div class="envelope" onclick="openEnvelope()">
+      <div class="flap"></div>
+      <div class="hint">👆 Click to Open</div>
+
+      <div class="letter">
+        <h2>Hi Chelloo ❤️</h2>
+
+        <img src="https://th-i.thgim.com/public/entertainment/movies/n9ch9v/article68090873.ece/alternates/FREE_1200/Muthupandi%20Ghilli.png"
+             class="love-img">
+
+        <p>
+          <b>I LOVE YOU</b> 💖<br><br>
+          You are doing a great Job in your life da vennamavaney. I'll support you no matter how hard the situation is 💕<br><br>
+          I'll always stand by your side. Neengalum antha maari iruppinga nu namburen illanna valuthupuduven.<br>
+          You’re my favorite person, always ❤️
+        </p>
+
+        <p>
+          Murugar arul-oda, we will reach great heights, achieve great success, and build the fort together.<br>
+          This message is just a tiny reminder — you mean the world to me 💫<br><br>
+          varataaaaa....😘
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= AUDIO ================= -->
+<audio id="letterSound">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-paper-slide-1530.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+let heartsStarted = false;
+
 function showPage2() {
   document.getElementById("page1").style.display = "none";
   document.getElementById("page2").style.display = "block";
 }
 
 function openEnvelope() {
-  document.querySelector('.envelope').classList.add('open');
+  const env = document.querySelector('.envelope');
+  const sound = document.getElementById("letterSound");
+
+  if (!env.classList.contains('open')) {
+    env.classList.add('open');
+
+    sound.currentTime = 0;
+    sound.volume = 1;
+    sound.play();
+
+    if (!heartsStarted) {
+      setInterval(createLove, 300);
+      heartsStarted = true;
+    }
+  }
 }
 
 function createLove() {
@@ -196,7 +290,6 @@ function createLove() {
   document.body.appendChild(love);
   setTimeout(() => love.remove(), 9000);
 }
-setInterval(createLove, 300);
 </script>
 
 </body>
